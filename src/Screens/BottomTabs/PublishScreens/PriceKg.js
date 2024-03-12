@@ -5,22 +5,22 @@ import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { colors } from '../../../../Config/theme/colors';
 import { useContext } from 'react';
 import { ThemeContext } from '../../../../contexts/ThemeContext';
+import { useDataContext } from '../../../../contexts/DataContext';
 
 const PriceKg = () => {
 
   // theme colors
   const {theme} = useContext(ThemeContext);
   const activeColors = colors[theme.mode];
-
+  const { userData, updateUserData } = useDataContext();
 
   const [pricekg, setPriceKg] = useState(5); // Initial value set to 5
   const navigation = useNavigation();
 
-  const handleCancelPress = () => {
-    navigation.goBack();
-  };
+  
   const handleNextPress = () => {
-    console.warn('published');
+    updateUserData({ pricePerKg: pricekg });
+    console.log(pricekg);
     navigation.navigate('Trips')
   };
 
@@ -37,15 +37,10 @@ const PriceKg = () => {
       return parseFloat(newKilos.toFixed(1)); // Ensure the value is rounded to 1 decimal place
     });
   };
-
   return (
     <View style={[styles.container,{backgroundColor:activeColors.bgcolor}]}>
       <View style={styles.content}>
-        <View style={styles.ArrowSection}>
-          <TouchableOpacity onPress={handleCancelPress}>
-            <AntDesign name="arrowleft" size={26} color="#dc661f" />
-          </TouchableOpacity>
-        </View>
+       
         <View style={styles.TextSection}>
           <Text style={[styles.TextHeader,{color:activeColors.TextColor}]}>Set your price per kilo in US Dollar</Text>
         </View>
@@ -89,10 +84,6 @@ const styles = StyleSheet.create({
   content:{
     marginTop:25, 
     marginHorizontal:20
-  },
-  ArrowSection: {
-    marginVertical:20,
-    marginHorizontal:10
   },
   TextSection:{
     marginTop:10,
@@ -138,11 +129,10 @@ const styles = StyleSheet.create({
   fontSize:18,
   },
   nextButton: {
-   flexDirection:'row',
-   alignItems: "center",
-   bottom:-250,
-   right:10,
-   position:'absolute'
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginTop:'30%'
   },
   nextText: {
     fontSize: 18,

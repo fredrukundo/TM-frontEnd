@@ -1,193 +1,163 @@
-import { StyleSheet, Text, View,Pressable,TouchableOpacity,TextInput,FlatList } from 'react-native'
-import React, {useState} from 'react'
-import { useNavigation } from '@react-navigation/native';
-import { AntDesign,FontAwesome,Ionicons } from '@expo/vector-icons';
-import { colors } from '../../../../Config/theme/colors';
-import { useContext } from 'react';
-import { ThemeContext } from '../../../../contexts/ThemeContext';
-
-
-const countriesData = [
-  { country: 'USA', cities: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'San Francisco'] },
-  { country: 'Canada', cities: ['Toronto', 'Montreal', 'Vancouver', 'Calgary', 'Ottawa'] },
-  { country: 'United Kingdom', cities: ['London', 'Manchester', 'Birmingham', 'Edinburgh', 'Glasgow'] },
-  { country: 'Australia', cities: ['Sydney', 'Melbourne', 'Brisbane', 'Perth', 'Adelaide'] },
-  { country: 'Germany', cities: ['Berlin', 'Munich', 'Hamburg', 'Frankfurt', 'Cologne'] },
-];
-
+import React, { useState, useContext } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { Country, City } from "country-state-city";
+import { Picker } from "@react-native-picker/picker";
+import { colors } from "../../../../Config/theme/colors";
+import { ThemeContext } from "../../../../contexts/ThemeContext";
+import { FontAwesome,AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { useDataContext } from "../../../../contexts/DataContext";
 
 const ArrivalCity = () => {
+  const navigation = useNavigation();
+  const {userData, updateUserData} = useDataContext();
 
-// theme colors
-const {theme} = useContext(ThemeContext);
+  const countries = Country.getAllCountries();
+  const cities = userData.arr_country
+    ? City.getCitiesOfCountry(userData.arr_country.isoCode)
+    : [];
+
+    const handleCountryChange = (country) => {
+      updateUserData({ arr_country: country});
+    };
+  
+    const handleCityChange = (city) => {
+      updateUserData({ arr_city: city });
+    };
+
+  // theme colors
+  const { theme } = useContext(ThemeContext);
   const activeColors = colors[theme.mode];
 
+  const handleNextPress = () => {
+    console.log(userData.arr_country.name ,userData.arr_country.flag , userData.arr_city.name);
+    navigation.navigate("Kilos to sell");
+  };
 
-  const navigation = useNavigation();
-  const [isFocus, setIsFocus] = useState(false);
-  const [input, setInput] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
-
-  
   const handleArrowBackPress = () => {
     navigation.goBack();
   };
-  const handleNextPress = () => {
-   navigation.navigate('Kilos to sell')
-  };
 
-  const handleTextChange = (text) => {
-    setInput(text);
-
-    const filteredSuggestions = countriesData.reduce((acc, curr) => {
-      const filteredCities = curr.cities.filter((city) =>
-        city.toLowerCase().startsWith(text.toLowerCase())
-      );
-      return [...acc, ...filteredCities.map((city) => `${city}, ${curr.country}`)];
-    }, []);
-
-    setSuggestions(filteredSuggestions);
-  };
-
-  const handlePress = (selectedItem) => {
-    setInput(selectedItem);
-    setSuggestions([])
-    // navigation.navigate('Search',{input1: selectedCity})
-  };
-
-  const clearText = () =>{
-    setInput('');
-    setSuggestions([]);
-    setIsFocus(false)
-  }
+  // Determine if both selectedCountry and userData.arr_city are not null
+  const isNextButtonVisible = userData.arr_country !== null && userData.arr_city !== null;
 
   return (
-    <View style={[styles.container,{backgroundColor:activeColors.bgcolor}]}>
-     <View style={styles.content}>
+    <View style={[styles.container, { backgroundColor: activeColors.bgcolor }]}>
+      <View style={styles.content}>
 
-    {/* Arrow Head */}
-    <View style={styles.ArrowSection}>
-        <TouchableOpacity  onPress={handleArrowBackPress}>
-        <AntDesign name="arrowleft" size={26} color="#dc661f" />
-        </TouchableOpacity>
-    </View>
+       
+        <View style={styles.TextSection}>
+          <Text style={[styles.TextHeader, { color: activeColors.TextColor }]}>
+            where are you going?
+          </Text>
+        </View>
 
-      {/* header text */}
-      <View style={styles.TextSection}>
-        <Text style={[styles.TextHeader,{color:activeColors.TextColor}]}>Where are you going?</Text>
+        <View style={styles.inputContainer}>
+          <Text style={[styles.label, { color: activeColors.TextColor }]}>
+            Arrival Country:
+          </Text>
+          <View style={styles.pickerStyle}>
+            <Picker
+              style={styles.dropdown}
+              selectedValue={userData.arr_country}
+              onValueChange={handleCountryChange}
+            >
+              <Picker.Item label="Select Country" value={null} />
+              {countries.map((country) => (
+                <Picker.Item
+                  key={country.isoCode}
+                  label={country.name}
+                  value={country}
+                />
+              ))}
+            </Picker>
+          </View>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={[styles.label, { color: activeColors.TextColor }]}>
+            Arrival City:
+          </Text>
+          <View style={styles.pickerStyle}>
+            <Picker
+              style={styles.dropdown}
+              selectedValue={userData.arr_city}
+              onValueChange={handleCityChange}
+            >
+              <Picker.Item label="Select City" value={null} />
+              {cities.map((city) => (
+                <Picker.Item key={city.name} label={city.name} value={city} />
+              ))}
+            </Picker>
+          </View>
+        </View>
+        <View style={{ marginTop: 50 }}>
+          {isNextButtonVisible && (
+            <TouchableOpacity
+              style={styles.nextButton}
+              onPress={handleNextPress}
+            >
+              <Text style={styles.nextText}>Next</Text>
+              <FontAwesome
+                name="arrow-circle-right"
+                size={50}
+                color="#dc661f"
+                style={{ paddingLeft: 6 }}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
-
-           {/* input button section */}
-         <View style={styles.inputContainer}>
-           <Text style={[styles.label,{color:activeColors.TextColor}]}>Arrival City</Text>
-           <View style={[styles.inputButton, isFocus && {borderColor:'blue'}]}>
-           <TextInput
-             placeholder={!isFocus ? "ex.Kigali" : " "}
-             value={input}
-             onChangeText={handleTextChange}
-             onFocus={()=> setIsFocus(true)}
-             style={{color:activeColors.TextColor}}
-             placeholderTextColor="gray"
-           />
-           {
-             input !== '' &&
-             <TouchableOpacity onPress={clearText} style={styles.cancelIcon}>
-             <Ionicons name="close" size={20} color="gray" />
-             </TouchableOpacity>
-           }
-           </View>
-           {suggestions.length > 0 && (
-       <FlatList
-         data={suggestions}
-         renderItem={({ item }) => (
-           <Pressable style={styles.pressable} onPress={() => handlePress(item)}>
-             <Text style={styles.suggestionText}>{item}</Text>
-           </Pressable>
-         )}
-         keyExtractor={(item) => item}
-       />
-     )}
-   </View>
- 
-   {input !== '' && (
-          <TouchableOpacity style={styles.nextButton} onPress={handleNextPress}>
-            <Text style={styles.nextText}>Next</Text>
-            <FontAwesome name="arrow-circle-right" size={50} color="#dc661f" style={{ paddingLeft: 6 }} />
-          </TouchableOpacity>
-        )}
-         
     </View>
-      
-    </View>
-  )
-}
-
-export default ArrivalCity
+  );
+};
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    backgroundColor:'#fff', 
-  },
-  content:{
-    marginTop:25, 
-    marginHorizontal:20
+  container: {
+    flex: 1,
   },
   ArrowSection: {
     marginVertical:20,
     marginHorizontal:10
   },
-  TextSection:{
-    marginTop:10,
-    justifyContent: 'center', 
-    alignItems: 'center',
-    marginBottom:20
+  content: {
+    marginHorizontal: 20,
   },
-  TextHeader:{
-    fontSize:29,
-    fontWeight:'700'
+  TextSection: {
+    marginVertical: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    top:20
   },
-  nextButton: {
-   flexDirection:'row',
-   alignItems: "center",
-   bottom:-300,
-   right:10,
-   position:'absolute'
+  TextHeader: {
+    fontSize: 24,
+    fontWeight: "700",
   },
-  nextText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-   
-  },
-  inputButton: {
-    flexDirection:'row',
+  pickerStyle: {
+    borderColor: "gray",
     borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 10,
-    padding: 10,
-    fontSize: 16,
-    alignItems:'center',
-    justifyContent:'space-between',
-    
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    backgroundColor: "#F9FBFC",
   },
   inputContainer: {
-    marginTop: 20,
-    marginBottom:20
+    marginVertical: 10,
   },
   label: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
-  pressable: {
-    backgroundColor: '#e5e5e5',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 5,
+  nextButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginTop:'30%'
   },
-  suggestionText: {
-    fontSize: 15,
-    fontWeight: '500',
+  nextText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
   },
-})
+});
+export default ArrivalCity;

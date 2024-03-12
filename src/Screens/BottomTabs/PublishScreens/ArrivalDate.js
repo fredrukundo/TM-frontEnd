@@ -1,28 +1,23 @@
-import { StyleSheet, Text, View,Pressable,TouchableOpacity,TextInput,FlatList } from 'react-native'
-import React, {useState} from 'react'
+import { StyleSheet, Text, View, Pressable, TouchableOpacity, TextInput } from 'react-native';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { AntDesign,FontAwesome } from '@expo/vector-icons';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import moment from 'moment';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { colors } from '../../../../Config/theme/colors';
 import { useContext } from 'react';
 import { ThemeContext } from '../../../../contexts/ThemeContext';
-
+import { useDataContext } from '../../../../contexts/DataContext';
 
 const DepartureDate = () => {
-
-// theme colors
-const {theme} = useContext(ThemeContext);
+  // theme colors
+  const { theme } = useContext(ThemeContext);
   const activeColors = colors[theme.mode];
 
-
   const navigation = useNavigation();
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [selectedArrDate, setSelectedArrDate] = useState(null);
+  const { userData, updateUserData } = useDataContext(); // Step 1
 
-  const handleArrowBackPress = () => {
-    navigation.goBack();
-  };
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -33,67 +28,59 @@ const {theme} = useContext(ThemeContext);
   };
 
   const handleDateConfirm = (date) => {
-    setSelectedArrDate(date);
+    updateUserData({ arr_date: date }); // Step 2
     hideDatePicker();
   };
 
   const handleNextPress = () => {
-    navigation.navigate('price per kilo')
+    navigation.navigate('price per kilo');
+    console.log(userData.arr_date); // Step 3
   };
 
   return (
-    <View style={[styles.container,{backgroundColor:activeColors.bgcolor}]}>
-     <View style={styles.content}>
+    <View style={[styles.container, { backgroundColor: activeColors.bgcolor }]}>
+      <View style={styles.content}>
+        {/* header text */}
+        <View style={styles.TextSection}>
+          <Text style={[styles.TextHeader, { color: activeColors.TextColor }]}>When will you arrive?</Text>
+        </View>
 
-    {/* Arrow Head */}
-    <View style={styles.ArrowSection}>
-        <TouchableOpacity  onPress={handleArrowBackPress}>
-        <AntDesign name="arrowleft" size={26} color="#dc661f" />
-        </TouchableOpacity>
-    </View>
-
-      {/* header text */}
-      <View style={styles.TextSection}>
-        <Text style={[styles.TextHeader,{color:activeColors.TextColor}]}>When will you arrive?</Text>
-      </View>
-
-      {/* date inputs */}
-         <View style={styles.inputContainer}>
-            <Text style={[styles.label,{color:activeColors.TextColor}]}>Arrival date</Text>
-            <View style={styles.dateInputContainer}>
-            
-              <TextInput
-                placeholder="select a date"
-                style={[styles.dateInput, selectedArrDate && {color:activeColors.TextColor,fontWeight: 'bold',fontSize:17}]}
-                value={selectedArrDate ? moment(selectedArrDate).format('MMMM DD, YYYY') : ''}
-                editable={false}
-                placeholderTextColor="gray"
-              />
-              <TouchableOpacity onPress={showDatePicker}>
-              <AntDesign name="calendar" size={34} color="#F0F0F0" style={{backgroundColor:"#dc661f", borderRadius:10, padding:5, marginRight:5}} />
-              </TouchableOpacity>
-              <DateTimePickerModal
-                 isVisible={isDatePickerVisible}
-                 mode="date"
-                 onConfirm={handleDateConfirm}
-                 onCancel={hideDatePicker}
-                />
-
-            </View>
+        {/* date inputs */}
+        <View style={styles.inputContainer}>
+          <Text style={[styles.label, { color: activeColors.TextColor }]}>Arrival date</Text>
+          <View style={styles.dateInputContainer}>
+            <TextInput
+              placeholder="select a date"
+              style={[styles.dateInput, userData.arr_date && styles.selectedDateInput]} // Update style
+              value={userData.arr_date ? moment(userData.arr_date).format('MMMM DD, YYYY') : ''}
+              editable={false}
+              placeholderTextColor="gray"
+            />
+            <TouchableOpacity onPress={showDatePicker}>
+              <AntDesign name="calendar" size={34} color="#F0F0F0" style={{ backgroundColor: "#dc661f", borderRadius: 10, padding: 5, marginRight: 5 }} />
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleDateConfirm}
+              onCancel={hideDatePicker}
+            />
           </View>
-          {/* next button */}
-          {selectedArrDate && (
+        </View>
+
+        {/* next button */}
+        {userData.arr_date && (
           <TouchableOpacity style={styles.nextButton} onPress={handleNextPress}>
             <Text style={styles.nextText}>Next</Text>
             <FontAwesome name="arrow-circle-right" size={50} color="#dc661f" style={{ paddingLeft: 6 }} />
           </TouchableOpacity>
         )}
+      </View>
     </View>
-    </View>
-  )
-}
+  );
+};
 
-export default DepartureDate
+export default DepartureDate;
 
 const styles = StyleSheet.create({
   container:{
@@ -104,10 +91,7 @@ const styles = StyleSheet.create({
     marginTop:25, 
     marginHorizontal:20
   },
-  ArrowSection: {
-    marginVertical:20,
-    marginHorizontal:10
-  },
+  
   TextSection:{
     marginTop:10,
     justifyContent: 'center', 
@@ -155,12 +139,11 @@ const styles = StyleSheet.create({
     fontSize:18
   },
   nextButton: {
-    flexDirection:'row',
+    flexDirection: "row",
     alignItems: "center",
-    bottom:-350,
-    right:10,
-    position:'absolute'
-   },
+    justifyContent: "flex-end",
+    marginTop:'60%'
+  },
    nextText: {
      fontSize: 18,
      fontWeight: 'bold',

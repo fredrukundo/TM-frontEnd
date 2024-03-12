@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "TravoMate app",
+    "name": "TravoMate-app",
     "slug": "TravoMate-app",
     "description": "this app is still under construction, just in case some of functions are not working properly",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/travomateLogOG.png",
     "userInterfaceStyle": "light",
@@ -17,7 +17,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.travomate.TravoMateapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,7 +27,8 @@
       },
       "permissions": [
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "package": "com.travomate.TravoMateapp"
     },
     "web": {
       "favicon": "./assets/travomateLogOG.png"
@@ -47,14 +49,14 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "5480be13-ddba-4f05-8ce6-e1b1d4be2835"
+        "projectId": "326a065a-2f92-4713-b00a-61693d51d94c"
       }
     },
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/5480be13-ddba-4f05-8ce6-e1b1d4be2835"
+      "url": "https://u.expo.dev/326a065a-2f92-4713-b00a-61693d51d94c"
     }
   }
 }

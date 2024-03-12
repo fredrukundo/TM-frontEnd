@@ -3,7 +3,8 @@ import { useState} from 'react';
 import { StyleSheet, View} from 'react-native';
 import Navigation from './src/Navigations/Navigation';
 import { ThemeContext } from './contexts/ThemeContext';
-import * as Updates from 'expo-updates'
+import * as Updates from 'expo-updates';
+import { DataProvider } from './contexts/DataContext';
 
 export default function App() {
 
@@ -37,13 +38,14 @@ setTheme(newTheme);
 }
 
   return (
-
+    <DataProvider>
     <ThemeContext.Provider value={{theme, updateTheme}}>
     {/* <View style={[styles.container,{backgroundColor:activeColors.bgcolor}]}> */}
     <Navigation/>
     <StatusBar style={theme.mode == "dark" ? "light" : "dark"} />
     {/* </View> */}
     </ThemeContext.Provider>
+    </DataProvider>
   );
 }
 

@@ -1,3 +1,5 @@
+//this FAQ file and Privacy and Terms has been replaced by the online files
+
 import React from 'react';
 import { View, Text, StyleSheet,ScrollView,TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';

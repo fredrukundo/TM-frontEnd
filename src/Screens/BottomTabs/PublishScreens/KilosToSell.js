@@ -5,51 +5,49 @@ import { AntDesign,FontAwesome } from '@expo/vector-icons';
 import { colors } from '../../../../Config/theme/colors';
 import { useContext } from 'react';
 import { ThemeContext } from '../../../../contexts/ThemeContext';
-
+import { useDataContext } from '../../../../contexts/DataContext';
 
 const KilosToSell = () => {
 
   // theme colors
   const {theme} = useContext(ThemeContext);
   const activeColors = colors[theme.mode];
+// add context
+  const { userData, updateUserData } = useDataContext();
 
-
-  const [kilos, setKilos] = useState(1);
+  
+  
   const navigation = useNavigation();
 
   const handleCancelPress = () => {
     navigation.goBack();
   };
+  
   const handleNextPress = () => {
-   navigation.navigate('Departure date')
+    navigation.navigate('Departure date');
+    console.log(userData.kilosToSell);
   };
 
   return (
     <View style={[styles.container,{backgroundColor:activeColors.bgcolor}]}>
     <View style={styles.content}>
 
-    <View style={styles.ArrowSection}>
-        <TouchableOpacity  onPress={handleCancelPress}>
-        <AntDesign name="arrowleft" size={26} color="#dc661f" />
-        </TouchableOpacity>
-    </View>
-
       <View style={styles.TextSection}>
         <Text style={[styles.TextHeader,{color:activeColors.TextColor}]}>How many Kilos do you wish to sell?</Text>
       </View>
 
       <View style={styles.countingSection}>
-              <Pressable onPress={() => setKilos(Math.max(1, kilos - 1))} >
+              <Pressable onPress={() => updateUserData({ kilosToSell: Math.max(1, userData.kilosToSell - 1) })} >
                 <AntDesign name="minuscircleo" size={30} color="#dc661f" />
               </Pressable>
 
               <Pressable>
                 <Text style={[styles.operationText,{color:activeColors.TextColor}]}>
-                  {kilos}
+                  {userData.kilosToSell}
                 </Text>
               </Pressable>
 
-              <Pressable onPress={() => setKilos((c) => c + 1)} >
+              <Pressable onPress={() => updateUserData({ kilosToSell: userData.kilosToSell + 1 })} >
                 <AntDesign name="pluscircleo" size={30} color="#dc661f" />
               </Pressable>
            
@@ -101,11 +99,10 @@ const styles = StyleSheet.create({
       fontWeight: "bold",   
   },
   nextButton: {
-   flexDirection:'row',
-   alignItems: "center",
-   bottom:-350,
-   right:10,
-   position:'absolute'
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginTop:'60%'
   },
   nextText: {
     fontSize: 18,

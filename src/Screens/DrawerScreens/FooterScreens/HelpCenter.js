@@ -38,7 +38,7 @@ const handleYoutubePress = async () => {
   }
 };
 const handleWebsitePress = async () => {
-  const url = Website_URL;
+  const url = 'https://travomate.godaddysites.com';
   const supported = await Linking.canOpenURL(url);
 
   if (supported) {

@@ -172,7 +172,7 @@ const Home = () => {
         <Entypo name="menu" size={44} color="white" style={{ marginLeft: 12 }}/>
       </TouchableOpacity>
       ),
-      title: "TravoMates",
+      title: "TravoMate",
       headerTitleStyle: {
         fontSize: 20,
         fontWeight: "bold",

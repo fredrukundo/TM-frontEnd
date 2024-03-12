@@ -21,7 +21,8 @@ import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../Config/theme/colors";
 import { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import {Website_URL, privacy_URL,terms_conditions_URL,faq_URL} from '@env' 
+import {privacy_URL,terms_conditions_URL,faq_URL} from '@env'
+
 
 const Account = () => {
   // theme colors

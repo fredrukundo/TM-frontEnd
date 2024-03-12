@@ -7,22 +7,19 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { colors } from '../../../../Config/theme/colors';
 import { useContext } from 'react';
 import { ThemeContext } from '../../../../contexts/ThemeContext';
-
+import { useDataContext } from '../../../../contexts/DataContext';
 
 const DepartureDate = () => {
 
   // theme colors
   const {theme} = useContext(ThemeContext);
   const activeColors = colors[theme.mode];
-
+  const { userData, updateUserData } = useDataContext();
 
   const navigation = useNavigation();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [selectedDepDate, setSelectedDepDate] = useState(null);
-
-  const handleArrowBackPress = () => {
-    navigation.goBack();
-  };
+  
+  
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -33,24 +30,20 @@ const DepartureDate = () => {
   };
 
   const handleDateConfirm = (date) => {
-    setSelectedDepDate(date);
+    updateUserData({ dep_date: date }); // Step 2
     hideDatePicker();
   };
 
   const handleNextPress = () => {
-    navigation.navigate('Arrival date')
+    navigation.navigate('Arrival date');
+    console.log(userData.dep_date); // Step 3
   };
 
   return (
     <View style={[styles.container,{backgroundColor:activeColors.bgcolor}]}>
      <View style={styles.content}>
 
-    {/* Arrow Head */}
-    <View style={styles.ArrowSection}>
-        <TouchableOpacity  onPress={handleArrowBackPress}>
-        <AntDesign name="arrowleft" size={26} color="#dc661f" />
-        </TouchableOpacity>
-    </View>
+    
 
       {/* header text */}
       <View style={styles.TextSection}>
@@ -64,8 +57,8 @@ const DepartureDate = () => {
             
               <TextInput
                 placeholder="select a date"
-                style={[styles.dateInput, selectedDepDate && {color:activeColors.TextColor,fontWeight: 'bold',fontSize:17}]}
-                value={selectedDepDate ? moment(selectedDepDate).format('MMMM DD, YYYY') : ''}
+                style={[styles.dateInput, userData.dep_date && {color:activeColors.TextColor,fontWeight: 'bold',fontSize:17}]}
+                value={userData.dep_date ? moment(userData.dep_date).format('MMMM DD, YYYY') : ''}
                 editable={false}
                 placeholderTextColor="gray"
               />
@@ -83,7 +76,7 @@ const DepartureDate = () => {
           </View>
           {/* next button */}
           
-          {selectedDepDate && (
+          {userData.dep_date && (
           <TouchableOpacity style={styles.nextButton} onPress={handleNextPress}>
             <Text style={styles.nextText}>Next</Text>
             <FontAwesome name="arrow-circle-right" size={50} color="#dc661f" style={{ paddingLeft: 6 }} />
@@ -104,10 +97,6 @@ const styles = StyleSheet.create({
   content:{
     marginTop:25, 
     marginHorizontal:20
-  },
-  ArrowSection: {
-    marginVertical:20,
-    marginHorizontal:10
   },
   TextSection:{
     marginTop:10,
@@ -151,12 +140,11 @@ const styles = StyleSheet.create({
     
   },
   nextButton: {
-    flexDirection:'row',
+    flexDirection: "row",
     alignItems: "center",
-    bottom:-350,
-    right:10,
-    position:'absolute'
-   },
+    justifyContent: "flex-end",
+    marginTop:'60%'
+  },
    nextText: {
      fontSize: 18,
      fontWeight: 'bold',
