@@ -48,14 +48,6 @@ const UserProfile = ({route}) => {
           <Text style={[styles.name,{color:activeColors.TextColor}]}>{post.user.name}</Text>
           <MaterialIcons name="verified" size={18} color="#0A64EF" />
           </View>
-          <TouchableOpacity style={{justifyContent:'center', alignItems:'center'}} onPress={() => console.log('go to reviews recieved')}>
-          <Text ><StarRating/></Text>
-          <View style={{flexDirection:'row', }}>
-          <MaterialIcons name="star" size={20} color="#ABB2B9"  style={{marginLeft:20}}/>
-          <Text style={styles.subtitle}> 0/5 -- </Text>
-          <Text style={styles.subtitle}> 0 Reviews</Text>
-          </View>
-          </TouchableOpacity>
         </View>
 
         <ScrollView>
@@ -223,23 +215,24 @@ const UserProfile = ({route}) => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        
-
     },
     profileImage: {
-        width: 70,
-        height: 70,
-        borderRadius: 35,
-       
-      },
-      profileDetails: {
-       justifyContent:'center',
-       alignItems:'center',
-       marginVertical:10,
-       borderBottomWidth:1,
-       borderColor:'#ccc'
-
-      },
+      width: 100,
+      height: 100,
+      borderRadius: 100,
+      borderWidth:5,
+      borderColor:'#fff',
+     // marginTop:50,
+    },
+    profileDetails: {
+     justifyContent:'center',
+     alignItems:'center',
+    },
+    headerSection:{
+      marginVertical:20,
+      paddingBottom:20,
+  
+    },
       name: {
         fontWeight: 'bold',
         fontSize: 16,

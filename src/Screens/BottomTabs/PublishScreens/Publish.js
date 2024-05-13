@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import React, {useContext } from "react";
+import { View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import { Country, City } from "country-state-city";
 import { Picker } from "@react-native-picker/picker";
 import { colors } from "../../../../Config/theme/colors";

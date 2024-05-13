@@ -1,9 +1,8 @@
-import { View, Text,StyleSheet, Image,ImageBackground,ScrollView } from 'react-native'
+import { View, Text,StyleSheet, Image,ImageBackground,useWindowDimensions } from 'react-native'
 import React from 'react'
 import StarRating from '../../../components/StarRating';
 import { MaterialIcons } from '@expo/vector-icons';
 import TabViews from '../../../components/TabViews';
-import VerifiedButton from '../../../components/VerifiedButton';
 import { colors } from '../../../../Config/theme/colors';
 import { useContext } from 'react';
 import { ThemeContext } from '../../../../contexts/ThemeContext';
@@ -47,32 +46,33 @@ const Users = {
   }
 }
 
-const Profile = ({route}) => {
+const Profile = () => {
+  const { width, height } = useWindowDimensions();
 
 // theme colors
   const {theme} = useContext(ThemeContext);
   const activeColors = colors[theme.mode];
 
-  // const {ID ,post} = route.params;
+  const imageSize = Math.min(width, height) * 0.4;
+
   return (
     <View style={[styles.container,{backgroundColor:activeColors.bgcolor}]}>
-    <ImageBackground source={backgroundImage} style={styles.background}>
 
-    <View style={styles.profileDetails}>
+    <View style={styles.headerSection}>
+    <View style={[styles.profileDetails, {height: imageSize }]}>
         <Image
           source={Users.user.image}
-          style={styles.profileImage}
+          style={[styles.profileImage, { width: imageSize, height: imageSize }]}
         />
         <View style={{flexDirection:'row'}}>
           <Text style={[styles.name,{color:activeColors.TextColor}]}>{Users.user.name}</Text>
           <MaterialIcons name="verified" size={18} color="#0A64EF" />
           </View>
-          <Text ><StarRating/></Text>
+          {/* <Text ><StarRating/></Text> */}
         </View>
+    </View>
         
         <TabViews/>
-       
-     </ImageBackground>
       </View>
       
   )
@@ -100,8 +100,10 @@ const styles = StyleSheet.create({
   profileDetails: {
    justifyContent:'center',
    alignItems:'center',
-   marginVertical:10,
-  
+  },
+  headerSection:{
+    marginVertical:20,
+    paddingBottom:20,
 
   },
   name: {

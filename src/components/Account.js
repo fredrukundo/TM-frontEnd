@@ -49,7 +49,7 @@ const Account = () => {
 
   // privacy policy
   const privacyPolicyPress = async () => {
-    const url = privacy_URL;
+    const url = "https://travomate.godaddysites.com/privacy-notice";
     const supported = await Linking.canOpenURL(url);
 
     if (supported) {
@@ -60,7 +60,7 @@ const Account = () => {
   };
   // Terms and condiitions
   const TermsConditions = async () => {
-    const url = terms_conditions_URL;
+    const url = "https://travomate.godaddysites.com/terms-and-conditions";
     const supported = await Linking.canOpenURL(url);
 
     if (supported) {
@@ -71,7 +71,7 @@ const Account = () => {
   };
   // frequently asked questions
   const faQuestions = async () => {
-    const url = faq_URL;
+    const url = "https://travomate.godaddysites.com/faq";
     const supported = await Linking.canOpenURL(url);
 
     if (supported) {
