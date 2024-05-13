@@ -37,6 +37,7 @@
     "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "~2.16.0",
     "react-native-gifted-chat": "^2.1.0",
+    "react-native-ios-picker": "^1.0.0",
     "react-native-modal-datetime-picker": "13.0.0",
     "react-native-modal-selector": "^2.1.2",
     "react-native-modals": "^0.22.3",
