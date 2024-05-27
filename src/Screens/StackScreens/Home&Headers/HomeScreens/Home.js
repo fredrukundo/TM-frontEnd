@@ -9,7 +9,7 @@ import { colors } from "../../../../../Config/theme/colors";
 import { useContext } from "react";
 import { ThemeContext } from "../../../../../contexts/ThemeContext";
 import useFetch from "../../../../../hook/useFetch";
-
+import FloatingButton from "../../../../components/FloatingButton";
 
 const Posts= [
   {
@@ -158,7 +158,78 @@ const Posts= [
       year: 2023
     }
   },
+  {
+    id: 5,
+    createdAt: "40m",
+    user: {
+      id: 121,
+      name: "Arthur Paul",
+      image: require('../../../../../assets/images/duke1.jpg'),
+      oneKilo: 5.50,
+      KilosRemaining: 15,
+      gender: "Male",
+      PreferredCurrency: "MAD",
+      memberSince: "july 2023"
   
+    },
+    
+    from: {
+      country: "Morocco",
+      city: "Casablanca",
+      flag: require('../../../../../assets/images/Flag_of_Morocco.png')
+    },
+    to: {
+      country: "Rwanda",
+      city: "Kigali",
+      flag: require('../../../../../assets/images/Flag_of_Rwanda.png')
+    },
+    departureDate: {
+      day: 28,
+      month: "May",
+      year: 2023
+    },
+    ArrivalDate: {
+      day: 29,
+      month: "May",
+      year: 2023
+    }
+  },
+  {
+    id: 6,
+    createdAt: "50m",
+    user: {
+      id: 111,
+      name: "Emma Sam",
+      image: require('../../../../../assets/images/profile.jpg'),
+      oneKilo: 5.50,
+      KilosRemaining: 25,
+      gender: "Male",
+      PreferredCurrency: "USD",
+      memberSince: "july 2021"
+  
+    },
+    
+    from: {
+      country: "United States",
+      city: "New York",
+      flag: require('../../../../../assets/images/USA.png')
+    },
+    to: {
+      country: "France",
+      city: "Paris",
+      flag: require('../../../../../assets/images/france.png')
+    },
+    departureDate: {
+      day: 24,
+      month: "May",
+      year: 2023
+    },
+    ArrivalDate: {
+      day: 25,
+      month: "May",
+      year: 2023
+    }
+  },
 ]
 
 const Home = () => {
@@ -202,14 +273,14 @@ const Home = () => {
   const navigation = useNavigation();
     return (
         <View style={[styles.container,{backgroundColor: activeColors.bgcolor}]}>
-        <Header1/>
+        {/* <Header1/> */}
         <ScrollView style={{paddingHorizontal: 10,}}>
-        <SearchScreen/>
+        {/* <SearchScreen/> */}
           {Posts.map((post) =>(
             <Post post={post} key={post.id} />
           ))}
-          
           </ScrollView>
+          <FloatingButton/>
         </View>
       );
     }

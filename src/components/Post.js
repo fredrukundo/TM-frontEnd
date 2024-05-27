@@ -85,11 +85,11 @@ const Post = ({ post }) => {
 const styles = StyleSheet.create({
   
   post: {
-    marginVertical: 10,
+    marginVertical: 5,
     borderWidth: 1,
     borderRadius: 20,
     borderColor: 'gray',
-    padding: 10,
+    padding: 5,
   },
   header: {
     flexDirection: 'row',
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 25,
-    marginRight: 10,
+    marginRight: 5,
   },
   name: {
     fontWeight: 'bold',
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   FromAndTO: {
-    marginVertical: 20,
+    marginVertical: 10,
   },
   FromAndTOText: {
     fontWeight: 'bold',
@@ -132,12 +132,12 @@ const styles = StyleSheet.create({
   },
   from: {
     flexDirection: 'row',
-    paddingTop: 10,
+    //paddingTop: 10,
     
   },
   to: {
     flexDirection: 'row',
-    paddingTop: 10,
+    paddingTop: 5,
   },
   cityFlag: {
     flexDirection: 'row',
@@ -160,16 +160,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   day: {
-    fontSize: 34,
+    fontSize: 25,
     fontWeight: 'bold',
   },
   month: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#dc661f',
   },
   year: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     color: 'gray',
   },

@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flex:1,
   },
   content:{
-    marginTop:25, 
+    marginTop:15, 
     marginHorizontal:20
   },
   ArrowSection: {
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     marginHorizontal:10
   },
   TextSection:{
-    marginTop:10,
+    //marginTop:10,
     justifyContent: 'center', 
     alignItems: 'center',
 

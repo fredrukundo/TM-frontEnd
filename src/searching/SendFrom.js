@@ -1,23 +1,17 @@
 import { StyleSheet, Text, View,TextInput,TouchableOpacity, Pressable,FlatList } from 'react-native'
-import React,{useState,useContext} from 'react'
+import React,{useState,useContext,useEffect} from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons,Entypo,MaterialIcons  } from "@expo/vector-icons";
+import { Ionicons} from "@expo/vector-icons";
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { colors } from '../../Config/theme/colors';
-
-const countriesData = [
-  { country: 'USA', cities: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'San Francisco'] },
-  { country: 'Canada', cities: ['Toronto', 'Montreal', 'Vancouver', 'Calgary', 'Ottawa'] },
-  { country: 'United Kingdom', cities: ['London', 'Manchester', 'Birmingham', 'Edinburgh', 'Glasgow'] },
-  { country: 'Australia', cities: ['Sydney', 'Melbourne', 'Brisbane', 'Perth', 'Adelaide'] },
-  { country: 'Germany', cities: ['Berlin', 'Munich', 'Hamburg', 'Frankfurt', 'Cologne'] },
-];
+import { useInputContext } from '../../contexts/DataContext';
+import countriesData from '../../Datas/countriesData.json'
 
 const SendFrom = () => {
-
-  // theme
+ 
   const {theme} = useContext(ThemeContext);
   const activeColors = colors[theme.mode];
+  const {setFrom} = useInputContext();
 
   const [isFocus, setIsFocus] = useState(false);
   const [inputText2, setInputText2] = useState('');
@@ -39,8 +33,10 @@ const SendFrom = () => {
 
   const handlePress = (selectedCity2) => {
     setInputText2(selectedCity2);
-    navigation.navigate('Search',{input1: selectedCity2})
+    setFrom(selectedCity2);
+    navigation.navigate('Search')
   };
+
 
 
   const handleCancelPress = () => {
@@ -67,6 +63,7 @@ const SendFrom = () => {
               onChangeText={handleTextChange}
               onFocus={()=> setIsFocus(true)}
               placeholderTextColor="gray"
+              style={styles.textInput}
             />
             {
               inputText2 !== '' &&
@@ -83,7 +80,7 @@ const SendFrom = () => {
               <Text style={styles.suggestionText}>{item}</Text>
             </Pressable>
           )}
-          keyExtractor={(item) => item}
+          keyExtractor={(item, index) => `${item}-${index}`}
         />
       )}
            
@@ -124,10 +121,13 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 10,
     padding: 10,
-    fontSize: 16,
     alignItems:'center',
     justifyContent:'space-between',
     
+  },
+  textInput: {
+    flex: 1,
+    fontSize: 16,
   },
   inputContainer: {
     marginTop: 20,
@@ -151,8 +151,3 @@ const styles = StyleSheet.create({
   },
  
 })
-
-
-
-
-

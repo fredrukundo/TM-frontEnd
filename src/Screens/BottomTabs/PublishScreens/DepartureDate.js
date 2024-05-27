@@ -95,11 +95,11 @@ const styles = StyleSheet.create({
     backgroundColor:'#fff', 
   },
   content:{
-    marginTop:25, 
+    marginTop:15, 
     marginHorizontal:20
   },
   TextSection:{
-    marginTop:10,
+    //marginTop:10,
     justifyContent: 'center', 
     alignItems: 'center',
     marginBottom:20

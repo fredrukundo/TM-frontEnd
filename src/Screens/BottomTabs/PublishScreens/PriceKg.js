@@ -82,11 +82,11 @@ const styles = StyleSheet.create({
     flex:1,
   },
   content:{
-    marginTop:25, 
+    marginTop:15, 
     marginHorizontal:20
   },
   TextSection:{
-    marginTop:10,
+    //marginTop:10,
     justifyContent: 'center', 
     alignItems: 'center',
 

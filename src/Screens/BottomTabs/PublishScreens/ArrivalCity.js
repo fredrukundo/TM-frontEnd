@@ -124,10 +124,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   TextSection: {
-    marginVertical: 30,
+    marginVertical: 15,
     justifyContent: "center",
     alignItems: "center",
-    top:20
+    //top:20
   },
   TextHeader: {
     fontSize: 24,

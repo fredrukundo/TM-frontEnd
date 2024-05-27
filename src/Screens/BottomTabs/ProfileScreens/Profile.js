@@ -1,13 +1,12 @@
-import { View, Text,StyleSheet, Image,ImageBackground,useWindowDimensions } from 'react-native'
+import { View, Text,StyleSheet, Image,useWindowDimensions, TouchableOpacity } from 'react-native'
 import React from 'react'
-import StarRating from '../../../components/StarRating';
 import { MaterialIcons } from '@expo/vector-icons';
 import TabViews from '../../../components/TabViews';
 import { colors } from '../../../../Config/theme/colors';
 import { useContext } from 'react';
 import { ThemeContext } from '../../../../contexts/ThemeContext';
 
-const backgroundImage = require('../../../../assets/images/flight-bg-L.jpg')
+
 const Users = {
   user: {
     id: 11,
@@ -47,6 +46,7 @@ const Users = {
 }
 
 const Profile = () => {
+
   const { width, height } = useWindowDimensions();
 
 // theme colors
@@ -57,7 +57,7 @@ const Profile = () => {
 
   return (
     <View style={[styles.container,{backgroundColor:activeColors.bgcolor}]}>
-
+    
     <View style={styles.headerSection}>
     <View style={[styles.profileDetails, {height: imageSize }]}>
         <Image
@@ -80,8 +80,8 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    backgroundColor:'#fff'
   },
+
   background: {
     flex: 1,
     resizeMode: 'cover',
@@ -95,15 +95,13 @@ const styles = StyleSheet.create({
     borderRadius: 500,
     borderWidth:5,
     borderColor:'#fff',
-    marginTop:50,
   },
   profileDetails: {
    justifyContent:'center',
    alignItems:'center',
   },
   headerSection:{
-    marginVertical:20,
-    paddingBottom:20,
+    marginVertical:10,
 
   },
   name: {
