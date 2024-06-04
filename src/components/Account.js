@@ -761,7 +761,7 @@ const Account = () => {
         </View>
         {/* version and footer */}
         <View style={styles.appVersion}>
-          <Text style={styles.versionText}>Version: 1.0.0</Text>
+          <Text style={styles.versionText}>Version: {AppVersion}</Text>
         </View>
       </ScrollView>
     </View>

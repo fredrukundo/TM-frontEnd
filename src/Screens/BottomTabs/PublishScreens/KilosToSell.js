@@ -53,7 +53,7 @@ const KilosToSell = () => {
            
           </View>
           <TouchableOpacity style={styles.nextButton} onPress={handleNextPress}>
-            <Text style={styles.nextText}>Next</Text>
+            <Text style={[styles.nextText, { color: activeColors.TextColor }]}>Next</Text>
             <FontAwesome name="arrow-circle-right" size={50} color="#dc661f" style={{paddingLeft:6}}/>
           </TouchableOpacity>
          

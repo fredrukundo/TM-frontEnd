@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Pressable, TouchableOpacity, Platform } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
@@ -67,7 +67,7 @@ const PriceKg = () => {
         </View>
         {/* next button */}
         <TouchableOpacity style={styles.nextButton} onPress={handleNextPress}>
-          <Text style={styles.nextText}>Next</Text>
+          <Text style={[styles.nextText, { color: activeColors.TextColor }]}>Next</Text>
           <FontAwesome name="arrow-circle-right" size={50} color="#dc661f" style={{ paddingLeft: 6 }} />
         </TouchableOpacity>
       </View>
@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     marginHorizontal:20
   },
   TextSection:{
-    //marginTop:10,
     justifyContent: 'center', 
     alignItems: 'center',
 
@@ -107,20 +106,19 @@ const styles = StyleSheet.create({
       fontWeight: "bold",   
   },
   recomButtonContainer:{
-    alignItems:'center'  
+    alignItems:'center',
+    borderRadius: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderColor:'white',
+    backgroundColor:"#dc661f"
   },
   recomButton:{
-    borderRadius: 20,
-    borderWidth: 1, 
     alignItems:'center' ,
-    paddingVertical: 5,
-    paddingHorizontal: 10, 
     color:'#fff',
-    backgroundColor:"#dc661f",
-    borderColor:'white',
     fontSize:18,
-    
   },
+
   idealTextSection: {
   marginVertical:10
   },

@@ -1,8 +1,14 @@
-import React from "react";
+import React, {useContext}from "react";
 import { View,TextInput,StyleSheet } from "react-native";
+import { colors } from "../../Config/theme/colors";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 
 const TextAreaInput = ({value,setValue,placeholder,secureTextEntry,keyboardType,defaultValue}) =>{
+
+    // Theme colors
+  const { theme } = useContext(ThemeContext);
+  const activeColors = colors[theme.mode];
     return(
         <View style={styles.container}>
         
@@ -11,7 +17,7 @@ const TextAreaInput = ({value,setValue,placeholder,secureTextEntry,keyboardType,
             onChange={setValue}
             placeholder={placeholder}
             defaultValue={defaultValue}
-            style={styles.input}
+            style={[styles.input, { color: activeColors.TextColor }]}
             secureTextEntry={secureTextEntry}  
             keyboardType={keyboardType}  
     

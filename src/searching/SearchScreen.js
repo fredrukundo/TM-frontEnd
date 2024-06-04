@@ -283,13 +283,16 @@ const SearchScreen = () => {
                   />
                 </View>
                 <TouchableOpacity onPress={showDatePicker}>
-                  <Feather name="calendar" size={34} color="#F0F0F0" style={{ backgroundColor: "#dc661f", borderRadius: 10, padding: 5, marginRight: 5 }} />
+                <View style={{ backgroundColor: "#dc661f", borderRadius: 10, padding: 5, marginRight: 5 }}>
+                  <Feather name="calendar" size={34} color="#F0F0F0" />
+                </View>
                 </TouchableOpacity>
                 <DateTimePickerModal
                   isVisible={isDatePickerVisible}
                   mode="date"
                   onConfirm={handleDateConfirm}
                   onCancel={hideDatePicker}
+                  textColor='#000'
                 />
               </View>
             </View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image,TouchableOpacity,Pressable} from 'react-native';
+import { StyleSheet, Text, View, Image,TouchableOpacity,Pressable,Linking} from 'react-native';
 import VerifiedButton from '../../../../components/VerifiedButton';
 import { FontAwesome5,MaterialCommunityIcons,MaterialIcons,Ionicons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -22,8 +22,16 @@ const navigation = useNavigation();
   // navigation.navigate('important before booking')
   navigation.navigate('Message')
  } 
- const handlePressInfo = () =>{
-  console.warn('more infos');
+ const handlePressInfo = async () =>{
+  // console.warn('more infos');
+  const url = 'https://travomate.godaddysites.com';
+  const supported = await Linking.canOpenURL(url);
+
+  if (supported) {
+    await Linking.openURL(url);
+  } else {
+    console.log("Don't know how to open URI: " + url);
+  }
  } 
  const handleReport = () =>{
   console.warn('report profile');
